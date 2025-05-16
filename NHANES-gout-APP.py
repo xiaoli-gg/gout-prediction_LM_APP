@@ -122,7 +122,8 @@ if st.button("Predict"):
     st.pyplot(plt)
     
     # SHAP 分析，注意“这里所用的模型是Bagclassifier，所以需要background数据，如果是tree模型的话就不需要”
-    background = pd.read_csv("shap_background.csv")
+    X_train = pd.read_csv("shap_background.csv")
+    background = shap.kmeans(X_train, 100)   
     explainer = shap.KernelExplainer(model.predict, background)
     shap_values = explainer.shap_values(feature_df)
 
